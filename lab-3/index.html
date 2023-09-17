@@ -3,6 +3,7 @@
 <head>
 <title>Данные суточного разрешения по температуре воздуха и осадкам</title>
 <meta charset="utf-8">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body bgcolor="C7EBFD" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table border="1" width="80%">
@@ -76714,5 +76715,20 @@
 <td>34300</td><td>Харків</td><td>2005-12-31</td><td>2.1</td><td>0</td><td>.7</td><td>0</td><td>1.8</td><td>0</td><td>0</td><td>0</td><td>2</td>
 </tr>
 </table>
+<div id="hottestDayModal" class="modal">
+    <div class="modal-content">
+        <span id="modalCloseButton" class="close">&times;</span>
+        <h2>Hottest Day Info</h2>
+        <p>Date: <span id="hottestDate"></span></p>
+        <p>Temperature: <span id="hottestTmp"></span></p>
+    </div>
+</div>
+<footer>
+    <button 
+        id="hottestDayButton"
+        onclick="renderHottestDay()"
+    >GET HOTTEST DAY</button>
+</footer>
 </body>
+<script src="./script.js"></script>
 </html>
