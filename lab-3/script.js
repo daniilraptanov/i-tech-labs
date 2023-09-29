@@ -7,7 +7,7 @@ const DEFAULT_MIN_OF_TMP = Number.NEGATIVE_INFINITY;
  * @returns HTMLTableElement | null
  */
 function getTable () {
-    return document.querySelector("table");
+    return document.getElementsByTagName("table")[0];
 }
 
 
@@ -17,7 +17,7 @@ function getTable () {
  * @returns HTMLTableRowElement[]
  */
 function getRows (table) {
-    return Array.from(table.querySelectorAll("tr"));
+    return Array.from(table.getElementsByTagName("tr"));
 }
 
 
@@ -27,7 +27,7 @@ function getRows (table) {
  * @returns HTMLTableCellElement[]
  */
 function getCells (row) {
-    return Array.from(row.querySelectorAll("td"));
+    return Array.from(row.getElementsByTagName("td"));
 }
 
 
@@ -55,7 +55,7 @@ function calculateHottestDay (rowsCells) {
             return new Error("CellElements is empty! (because it is table header)");
         }
 
-        const tmp = parseInt(cells[INDEX_OF_TMP_MAX].textContent);
+        const tmp = parseFloat(cells[INDEX_OF_TMP_MAX].textContent);
         const date = cells[INDEX_OF_DATE].textContent;
 
         if (tmp > dayObj.tmp) {
