@@ -50,5 +50,17 @@
     <form action="get_negative_balance.php" method="post">
         <button type="submit" name="submit">Отримати клієнтів</button>
     </form>
+
+    <h1>Попередній результат:</h1>
+    <div id="messages">Messages does not saved...</div> <br>
+    <div id="traffics">Traffics statistics does not saved...</div> <br>
+    <div id="negativeBalances">Negative balances does not saved...</div> <br>
+    <script>
+        (() => {
+            document.getElementById("messages").innerHTML = localStorage.getItem("messages") || "Messages does not saved...";
+            document.getElementById("traffics").innerHTML = localStorage.getItem("traffics") || "Traffics statistics does not saved...";
+            document.getElementById("negativeBalances").innerHTML = localStorage.getItem("negativeBalances") || "Negative balances does not saved...";
+        })();
+    </script>
 </body>
 </html>

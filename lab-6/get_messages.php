@@ -11,12 +11,16 @@ if (isset($_POST['submit'])) {
         $query = new MongoDB\Driver\Query(["login" => $selectedUser]);
         $cursor = $mongoManager->executeQuery('network_trafficts.users', $query);
 
+        $res = "";
         foreach ($cursor as $user) {
-            echo "Повідомлення користувача $selectedUser: " . "<br>";
+            $res.= "<h2>Повідомлення користувача $selectedUser:</h2>";
             foreach ($user->messages as $message) {
-                echo $message . "<br>";
+                $res.= $message . "<br>";
             }
         }
+
+        echo $res;
+        echo "<script>localStorage.setItem('messages', '$res');</script>";
     } catch (MongoDB\Driver\Exception\Exception $e) {
         echo "Помилка при отриманні повідомлень: " . $e->getMessage();
     }

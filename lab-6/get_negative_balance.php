@@ -8,10 +8,13 @@ try {
     $query = new MongoDB\Driver\Query(["account_balance" => ['$lt' => 0]]);
     $cursor = $mongoManager->executeQuery('network_trafficts.users', $query);
 
-    echo "<h2>Список клієнтів з від'ємним балансом рахунку:</h2>";
+    $res = "<h2>Список клієнтів з негативним балансом рахунку:</h2>";
     foreach ($cursor as $user) {
-        echo "Користувач: " . $user->login . ", Баланс: " . $user->account_balance . "<br>";
+        $res.= "Користувач: " . $user->login . ", Баланс: " . $user->account_balance . "<br>";
     }
+
+    echo $res;
+    echo "<script>localStorage.setItem('negativeBalances', '$res');</script>";
 } catch (MongoDB\Driver\Exception\Exception $e) {
     echo "Помилка при отриманні клієнтів з від'ємним балансом: " . $e->getMessage();
 }

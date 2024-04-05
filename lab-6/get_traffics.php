@@ -19,8 +19,12 @@ if (isset($_POST['submit'])) {
             $totalOutgoingTraffic += $session->outgoing_traffic;
         }
 
-        echo "Загальний вхідний трафік для користувача $selectedUser: $totalIncomingTraffic<br>";
-        echo "Загальний вихідний трафік для користувача $selectedUser: $totalOutgoingTraffic<br>";
+        $res = "<h2>Трафік користувача $selectedUser</h2>";
+        $res.= "Загальний вхідний трафік: $totalIncomingTraffic<br>";
+        $res.= "Загальний вихідний трафік: $totalOutgoingTraffic<br>";
+
+        echo $res;
+        echo "<script>localStorage.setItem('traffics', '$res');</script>";
     } catch (MongoDB\Driver\Exception\Exception $e) {
         echo "Помилка при отриманні трафіку: " . $e->getMessage();
     }
