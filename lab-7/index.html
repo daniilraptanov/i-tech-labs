@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab7</title>
+</head>
+<body>
+    <form id="query1Form">
+        <label for="project_name">Project Name: </label>
+        <input type="text" id="project_name_query1" name="project_name">
+        <br>
+        <label for="date">Date: </label>
+        <input type="date" id="date_query1" name="date">
+        <br>
+        <input type="button" value="Get works descriptions" onclick="getWorksDescriptions()">
+    </form>
+    <br>
+    <br>
+    <div id="worksDescriptionResult"></div>
+
+    <form id="query2Form">
+        <label for="project_name_query2">Project Name: </label>
+        <input type="text" id="project_name_query2" name="project_name">
+        <br>
+        <input type="button" value="Get Total Work Time" onclick="getTotalWorkTime()">
+    </form>
+    <br>
+    <div id="totalWorkTimeResult"></div>
+
+    <form id="query3Form">
+        <label for="manager">Manager Name: </label>
+        <input type="text" id="manager" name="manager">
+        <br>
+        <input type="button" value="Get Number of Workers" onclick="getNumberOfWorkers()">
+    </form>
+    <br>
+    <div id="numberOfWorkersResult"></div>
+
+    <script>
+        function getWorksDescriptions() {
+            const projectName = document.getElementById('project_name_query1').value;
+            const date = document.getElementById('date_query1').value;
+
+            fetch('query_1.php?project_name=' + encodeURIComponent(projectName) + '&date=' + encodeURIComponent(date))
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('worksDescriptionResult').innerHTML = data;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+
+    <script>
+        function getTotalWorkTime() {
+            const projectName = document.getElementById('project_name_query2').value;
+
+            fetch('query_2.php?project_name=' + encodeURIComponent(projectName))
+                .then(response => response.text())
+                .then(data => {
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(data, 'text/xml');
+
+                    const messageElement = xmlDoc.getElementsByTagName('message')[0];
+                    if (messageElement) {
+                        const message = messageElement.textContent;
+
+                        document.getElementById('totalWorkTimeResult').innerHTML = "<h2>" + message + "</h2>";
+                    } else {
+                        console.error('Error: No message element found in XML response');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+
+    <script>
+        function getNumberOfWorkers() {
+            const managerName = document.getElementById('manager').value;
+
+            fetch('query_3.php?manager=' + encodeURIComponent(managerName))
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('numberOfWorkersResult').innerHTML = "<h2>" + data.message + "</h2>";
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
